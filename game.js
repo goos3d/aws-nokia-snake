@@ -13,7 +13,7 @@
   const muteButton = document.getElementById('muteButton');
   const directionalButtons = document.querySelectorAll('[data-direction]');
 
-  const GRID_SIZE = 16;
+  const { GRID_SIZE, createInitialState, isOutside, queueDirection, advanceGame } = window.NokiaSnakeCore;
   const TILE_SIZE = 18;
   const CANVAS_SIZE = GRID_SIZE * TILE_SIZE;
   const STORAGE_KEY = 'nokia-snake-high-score';
@@ -56,22 +56,19 @@
   }
 
   function newGame() {
-    snake = [
-      { x: 8, y: 8 },
-      { x: 7, y: 8 },
-      { x: 6, y: 8 }
-    ];
-    direction = { x: 1, y: 0 };
-    queuedDirection = { ...direction };
-    score = 0;
-    food = createFood();
+    const state = createInitialState();
+    snake = state.snake;
+    direction = state.direction;
+    queuedDirection = state.queuedDirection;
+    score = state.score;
+    food = createFood(snake);
   }
 
-  function createFood() {
+  function createFood(currentSnake = snake) {
     const openCells = [];
     for (let y = 0; y < GRID_SIZE; y += 1) {
       for (let x = 0; x < GRID_SIZE; x += 1) {
-        if (!snake.some((segment) => segment.x === x && segment.y === y)) {
+        if (!currentSnake.some((segment) => segment.x === x && segment.y === y)) {
           openCells.push({ x, y });
         }
       }
@@ -91,47 +88,39 @@
   }
 
   function tick() {
-    direction = queuedDirection;
-    const currentHead = snake[0];
-    const nextHead = {
-      x: currentHead.x + direction.x,
-      y: currentHead.y + direction.y
-    };
+    const nextState = advanceGame({
+      snake,
+      food,
+      direction,
+      queuedDirection,
+      score,
+      gameRunning
+    }, {
+      wallsEnabled,
+      createFood
+    });
 
-    if (wallsEnabled && isOutside(nextHead)) {
+    snake = nextState.snake;
+    food = nextState.food;
+    direction = nextState.direction;
+    queuedDirection = nextState.queuedDirection;
+    score = nextState.score;
+
+    if (!nextState.gameRunning) {
       endGame();
       return;
     }
 
-    nextHead.x = (nextHead.x + GRID_SIZE) % GRID_SIZE;
-    nextHead.y = (nextHead.y + GRID_SIZE) % GRID_SIZE;
-
-    const ateFood = food && nextHead.x === food.x && nextHead.y === food.y;
-    const bodyToCheck = ateFood ? snake : snake.slice(0, -1);
-    if (bodyToCheck.some((segment) => segment.x === nextHead.x && segment.y === nextHead.y)) {
-      endGame();
-      return;
-    }
-
-    snake.unshift(nextHead);
-    if (ateFood) {
-      score += 1;
+    if (nextState.ateFood) {
       if (score > highScore) {
         highScore = score;
         saveHighScore();
       }
-      food = createFood();
       beep(620, 0.05);
-    } else {
-      snake.pop();
     }
 
     render();
     scheduleTick();
-  }
-
-  function isOutside(cell) {
-    return cell.x < 0 || cell.x >= GRID_SIZE || cell.y < 0 || cell.y >= GRID_SIZE;
   }
 
   function render() {
@@ -203,8 +192,8 @@
   }
 
   function setDirection(nextDirection) {
-    const isOpposite = nextDirection.x === -direction.x && nextDirection.y === -direction.y;
-    if (!isOpposite) queuedDirection = nextDirection;
+    const nextState = queueDirection({ direction, queuedDirection }, nextDirection);
+    queuedDirection = nextState.queuedDirection;
   }
 
   function beep(frequency, duration) {

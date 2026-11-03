@@ -24,11 +24,16 @@ jobs:
           fetch-depth: 0
 
       - name: Check JavaScript syntax
-        run: node --check game.js
+        run: |
+          node --check game-core.js
+          node --check game.js
+
+      - name: Run gameplay tests
+        run: node --test
 
       - name: Check required static assets
         run: |
-          for asset in index.html style.css game.js; do
+          for asset in index.html style.css game-core.js game.js; do
             test -s "$asset"
           done
 
@@ -51,7 +56,7 @@ jobs:
           ];
           const directions = ['up', 'down', 'left', 'right'];
           const missingIds = requiredIds.filter((id) => !html.includes(`id="${id}"`));
-          const missingReferences = ['style.css', 'game.js']
+          const missingReferences = ['style.css', 'game-core.js', 'game.js']
             .filter((asset) => !html.includes(`"${asset}"`));
           const missingDirections = directions.filter(
             (direction) => !html.includes(`data-direction="${direction}"`)
