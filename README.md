@@ -2,7 +2,9 @@
 
 A small, offline-first Snake game inspired by the Nokia 3310. It uses only HTML, CSS, and browser JavaScript—no framework, package manager, backend, or external assets.
 
-> **Deployment status:** playable locally; **not deployed to AWS**.
+> **Deployment status:** playable locally and deployed to AWS.
+>
+> **Play online:** [https://d1b6d8vgpchw00.cloudfront.net/](https://d1b6d8vgpchw00.cloudfront.net/)
 
 ## Gameplay
 
