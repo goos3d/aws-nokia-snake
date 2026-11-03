@@ -10,6 +10,7 @@
 <body>
   <main class="phone" aria-label="Nokia Snake game">
     <header class="brand">NOKIA</header>
+
     <section class="lcd-bezel" aria-label="Game display">
       <div class="score-row" aria-live="polite">
         <span id="scoreDisplay">SCORE 000</span>
@@ -18,23 +19,42 @@
       <canvas id="gameCanvas" aria-label="Snake game board"></canvas>
       <p id="statusDisplay" class="status">PRESS START</p>
     </section>
-    <div class="softkeys" aria-label="Game actions">
-      <button id="startButton" type="button">START</button>
-      <button id="pauseButton" type="button" disabled>PAUSE</button>
-      <button id="restartButton" type="button">RESTART</button>
-    </div>
-    <div class="d-pad" aria-label="Direction controls">
-      <button type="button" class="up" data-direction="up" aria-label="Move up">▲</button>
-      <button type="button" class="left" data-direction="left" aria-label="Move left">◀</button>
-      <span class="center" aria-hidden="true"></span>
-      <button type="button" class="right" data-direction="right" aria-label="Move right">▶</button>
-      <button type="button" class="down" data-direction="down" aria-label="Move down">▼</button>
-    </div>
-    <div class="options">
-      <button id="wallsButton" type="button">WALLS: OFF</button>
-      <button id="muteButton" type="button">SOUND: OFF</button>
-    </div>
-    <p class="help">ARROWS / WASD · SPACE TO PAUSE</p>
+
+    <section class="control-deck" aria-label="Nokia-style game controls">
+      <div class="softkey-row">
+        <button id="startButton" class="softkey softkey-left" type="button">START</button>
+        <button id="pauseButton" class="softkey softkey-right" type="button" disabled>PAUSE</button>
+      </div>
+
+      <div class="navigation-row" aria-label="Direction controls">
+        <button id="restartButton" class="clear-key" type="button" aria-label="Restart game">C</button>
+        <div class="nav-pad" aria-label="Move the snake">
+          <button type="button" class="nav-key nav-up" data-direction="up" aria-label="Move up">▲</button>
+          <button type="button" class="nav-key nav-left" data-direction="left" aria-label="Move left">◀</button>
+          <span class="nav-center" aria-hidden="true"></span>
+          <button type="button" class="nav-key nav-right" data-direction="right" aria-label="Move right">▶</button>
+          <button type="button" class="nav-key nav-down" data-direction="down" aria-label="Move down">▼</button>
+        </div>
+        <span class="clear-key-spacer" aria-hidden="true"></span>
+      </div>
+
+      <div class="numeric-keypad" aria-label="Numeric keypad">
+        <button type="button" class="number-key" aria-label="1"><strong>1</strong><small>&nbsp;</small></button>
+        <button type="button" class="number-key" data-direction="up" aria-label="2 ABC, move up"><strong>2</strong><small>ABC</small></button>
+        <button type="button" class="number-key" aria-label="3 DEF"><strong>3</strong><small>DEF</small></button>
+        <button type="button" class="number-key" data-direction="left" aria-label="4 GHI, move left"><strong>4</strong><small>GHI</small></button>
+        <button type="button" class="number-key" aria-label="5 JKL"><strong>5</strong><small>JKL</small></button>
+        <button type="button" class="number-key" data-direction="right" aria-label="6 MNO, move right"><strong>6</strong><small>MNO</small></button>
+        <button type="button" class="number-key" aria-label="7 PQRS"><strong>7</strong><small>PQRS</small></button>
+        <button type="button" class="number-key" data-direction="down" aria-label="8 TUV, move down"><strong>8</strong><small>TUV</small></button>
+        <button type="button" class="number-key" aria-label="9 WXYZ"><strong>9</strong><small>WXYZ</small></button>
+        <button id="muteButton" class="number-key function-key" type="button" aria-label="Toggle sound"><strong>*</strong><small>SOUND</small></button>
+        <button type="button" class="number-key" aria-label="0"><strong>0</strong><small>+</small></button>
+        <button id="wallsButton" class="number-key function-key" type="button" aria-label="Toggle walls mode"><strong>#</strong><small>WALLS</small></button>
+      </div>
+    </section>
+
+    <p class="help">ARROWS / WASD / 2 4 6 8 · SPACE TO PAUSE</p>
   </main>
   <script src="game.js"></script>
 </body>
