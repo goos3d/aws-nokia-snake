@@ -13,6 +13,7 @@ A small, offline-first Snake game inspired by the Nokia 3310. It uses only HTML,
 - **Wrap mode** is the default: crossing an edge returns the snake on the opposite side.
 - Enable **WALLS: ON** to make an edge collision end the game.
 - Your local high score is saved in browser storage.
+- The game display is rendered as an 84 × 48 logical LCD with nearest-neighbor scaling, bitmap text, and a muted green-gray pixel texture. Its landscape playfield is a 20 × 11 grid of 4 × 4 pixel cells, framed by a two-pixel LCD gutter.
 
 ### Controls
 
@@ -23,6 +24,17 @@ A small, offline-first Snake game inspired by the Nokia 3310. It uses only HTML,
 | Start/restart | On-screen buttons |
 | Mobile movement | On-screen directional pad |
 | Sound | **SOUND: ON/OFF** |
+| Emergency Snek | Press keypad **9**, **1**, **1**, then the green **CALL / START** key |
+
+### Emergency Snek
+
+The secret keypad sequence cycles a page-session-only appearance mode:
+
+1. Ambulance Snek — light body, red markings, and a flashing beacon.
+2. Fire Truck Snek — red body, yellow markings, and a flashing beacon.
+3. Normal Snek.
+
+The activation confirmation plays a short synthesized siren only when sound is enabled. It does not place calls, open links, or make network requests. The selected mode survives starts, restarts, and game overs, but resets after reloading the page.
 
 ## Screenshot
 
@@ -42,9 +54,10 @@ Run the available automated syntax check with Node.js:
 
 ```sh
 node --check game.js
+node --test test/game-core.test.js
 ```
 
-Manual browser verification should cover movement, food growth, self-collision, edge wrapping, wall mode, pause/resume, mobile controls, sound toggle, high-score persistence, and responsive layout.
+Manual browser verification should cover movement, food growth, self-collision, edge wrapping, wall mode, pause/resume, mobile controls, sound toggle, high-score persistence, responsive LCD layout, and the `9 → 1 → 1 → CALL / START` Emergency Snek sequence.
 
 ## Planned AWS architecture
 

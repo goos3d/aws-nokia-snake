@@ -30,7 +30,7 @@ Create/tag the bucket in `us-east-2`, enable default SSE-S3 encryption, and enab
 
 ### 2. Upload the static application
 
-Upload `index.html`, `style.css`, and `game.js`. Documentation files do not need to be hosted. Use conservative cache durations during initial testing.
+Upload `index.html`, `style.css`, `game-core.js`, and `game.js`. Documentation files do not need to be hosted. Use conservative cache durations during initial testing.
 
 ### 3. Create OAC
 

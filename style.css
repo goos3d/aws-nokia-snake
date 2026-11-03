@@ -17,6 +17,7 @@ body {
 
 .phone {
   width: min(100%, 396px);
+  min-width: 0;
   padding: 31px 25px 27px;
   border: 5px solid #8b938b;
   border-radius: 48px 48px 58px 58px;
@@ -47,10 +48,11 @@ body {
 .score-row, .status {
   display: flex;
   justify-content: space-between;
-  margin: 0 0 7px;
-  color: #263b29;
-  font-size: clamp(.68rem, 3vw, .83rem);
+  margin: 0 0 5px;
+  color: #b7c48c;
+  font-size: clamp(.62rem, 2.8vw, .75rem);
   font-weight: 700;
+  letter-spacing: .04em;
 }
 
 #gameCanvas {
@@ -59,12 +61,13 @@ body {
   height: auto;
   border: 2px solid #263b29;
   image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 .status {
   justify-content: center;
   min-height: 1em;
-  margin: 7px 0 0;
+  margin: 5px 0 0;
 }
 
 button {
@@ -182,7 +185,7 @@ button:disabled { cursor: not-allowed; opacity: .48; }
 
 @media (max-width: 390px) {
   body { padding: 8px; }
-  .phone { padding: 24px 15px 19px; border-radius: 34px 34px 42px 42px; }
+  .phone { width: calc(100vw - 16px); max-width: calc(100vw - 16px); padding: 24px 10px 19px; border-radius: 34px 34px 42px 42px; }
   .lcd-bezel { padding: 9px; border-width: 6px; }
   .softkey-row { gap: 58px; }
   .navigation-row { grid-template-columns: 43px 1fr 43px; }

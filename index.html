@@ -22,7 +22,7 @@
 
     <section class="control-deck" aria-label="Snek-style game controls">
       <div class="softkey-row">
-        <button id="startButton" class="softkey softkey-left" type="button">START</button>
+        <button id="startButton" class="softkey softkey-left" type="button">CALL / START</button>
         <button id="pauseButton" class="softkey softkey-right" type="button" disabled>PAUSE</button>
       </div>
 
@@ -39,15 +39,15 @@
       </div>
 
       <div class="numeric-keypad" aria-label="Numeric keypad">
-        <button type="button" class="number-key" aria-label="1"><strong>1</strong><small>&nbsp;</small></button>
-        <button type="button" class="number-key" data-direction="up" aria-label="2 ABC, move up"><strong>2</strong><small>ABC</small></button>
-        <button type="button" class="number-key" aria-label="3 DEF"><strong>3</strong><small>DEF</small></button>
-        <button type="button" class="number-key" data-direction="left" aria-label="4 GHI, move left"><strong>4</strong><small>GHI</small></button>
-        <button type="button" class="number-key" aria-label="5 JKL"><strong>5</strong><small>JKL</small></button>
-        <button type="button" class="number-key" data-direction="right" aria-label="6 MNO, move right"><strong>6</strong><small>MNO</small></button>
-        <button type="button" class="number-key" aria-label="7 PQRS"><strong>7</strong><small>PQRS</small></button>
-        <button type="button" class="number-key" data-direction="down" aria-label="8 TUV, move down"><strong>8</strong><small>TUV</small></button>
-        <button type="button" class="number-key" aria-label="9 WXYZ"><strong>9</strong><small>WXYZ</small></button>
+        <button type="button" class="number-key" data-keypad-digit="1" aria-label="1"><strong>1</strong><small>&nbsp;</small></button>
+        <button type="button" class="number-key" data-keypad-digit="2" data-direction="up" aria-label="2 ABC, move up"><strong>2</strong><small>ABC</small></button>
+        <button type="button" class="number-key" data-keypad-digit="3" aria-label="3 DEF"><strong>3</strong><small>DEF</small></button>
+        <button type="button" class="number-key" data-keypad-digit="4" data-direction="left" aria-label="4 GHI, move left"><strong>4</strong><small>GHI</small></button>
+        <button type="button" class="number-key" data-keypad-digit="5" aria-label="5 JKL"><strong>5</strong><small>JKL</small></button>
+        <button type="button" class="number-key" data-keypad-digit="6" data-direction="right" aria-label="6 MNO, move right"><strong>6</strong><small>MNO</small></button>
+        <button type="button" class="number-key" data-keypad-digit="7" aria-label="7 PQRS"><strong>7</strong><small>PQRS</small></button>
+        <button type="button" class="number-key" data-keypad-digit="8" data-direction="down" aria-label="8 TUV, move down"><strong>8</strong><small>TUV</small></button>
+        <button type="button" class="number-key" data-keypad-digit="9" aria-label="9 WXYZ"><strong>9</strong><small>WXYZ</small></button>
         <button id="muteButton" class="number-key function-key" type="button" aria-label="Toggle sound"><strong>*</strong><small>SOUND</small></button>
         <button type="button" class="number-key" aria-label="0"><strong>0</strong><small>+</small></button>
         <button id="wallsButton" class="number-key function-key" type="button" aria-label="Toggle walls mode"><strong>#</strong><small>WALLS</small></button>
