@@ -1,4 +1,4 @@
-## Nokia Snake Game Specification
+## Snek Snake Game Specification
 
 ### Overview
 A single-player implementation of the classic Snake game, styled to mimic the look and feel of the Nokia 3310.

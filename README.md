@@ -1,4 +1,4 @@
-# Nokia Snake
+# Snek Snake
 
 A small, offline-first Snake game inspired by the Nokia 3310. It uses only HTML, CSS, and browser JavaScript—no framework, package manager, backend, or external assets.
 
