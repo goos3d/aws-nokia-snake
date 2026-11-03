@@ -17,7 +17,7 @@
   const {
     GRID_COLUMNS, GRID_ROWS, createInitialState, queueDirection, advanceGame,
     recordKeypadDigit, isEmergencySequenceReady, nextEmergencyMode,
-    mapGridCellToPixels, getSegmentConnections
+    mapGridCellToPixels, getSegmentConnections, shouldHandleClick
   } = window.NokiaSnakeCore;
   const LCD_WIDTH = 84;
   const LCD_HEIGHT = 48;
@@ -326,33 +326,59 @@
     if (event.key === ' ') { event.preventDefault(); pauseGame(); }
   });
 
-  directionalButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const directions = { up: { x: 0, y: -1 }, down: { x: 0, y: 1 }, left: { x: -1, y: 0 }, right: { x: 1, y: 0 } };
-      setDirection(directions[button.dataset.direction]);
+  const pressActions = new Map();
+
+  function addPressAction(button, action) {
+    const previousAction = pressActions.get(button);
+    pressActions.set(button, () => {
+      if (previousAction) previousAction();
+      action();
     });
-  });
-  keypadButtons.forEach((button) => button.addEventListener('click', () => {
+  }
+
+  function bindPress(button, action) {
+    let lastPointerPress = Number.NEGATIVE_INFINITY;
+    button.addEventListener('pointerdown', (event) => {
+      if (!event.isPrimary || event.button !== 0) return;
+      event.preventDefault();
+      lastPointerPress = performance.now();
+      action();
+    });
+    button.addEventListener('click', (event) => {
+      if (!shouldHandleClick(lastPointerPress, performance.now())) {
+        event.preventDefault();
+        return;
+      }
+      action();
+    });
+  }
+
+  const directions = {
+    up: { x: 0, y: -1 }, down: { x: 0, y: 1 }, left: { x: -1, y: 0 }, right: { x: 1, y: 0 }
+  };
+  directionalButtons.forEach((button) => addPressAction(button, () => setDirection(directions[button.dataset.direction])));
+  keypadButtons.forEach((button) => addPressAction(button, () => {
     keypadSequence = recordKeypadDigit(keypadSequence, button.dataset.keypadDigit);
   }));
-  startButton.addEventListener('click', () => {
+  addPressAction(startButton, () => {
     const activated = activateEmergencyIfReady();
     if (!gameRunning) startGame();
     if (!activated && gameRunning) render();
   });
-  pauseButton.addEventListener('click', pauseGame);
-  restartButton.addEventListener('click', restartGame);
-  wallsButton.addEventListener('click', () => {
+  addPressAction(pauseButton, pauseGame);
+  addPressAction(restartButton, restartGame);
+  addPressAction(wallsButton, () => {
     wallsEnabled = !wallsEnabled;
     wallsButton.textContent = wallsEnabled ? 'WALLS: ON' : 'WALLS: OFF';
     statusDisplay.textContent = wallsEnabled ? 'WALLS ON' : 'WRAP MODE';
     render();
   });
-  muteButton.addEventListener('click', () => {
+  addPressAction(muteButton, () => {
     soundEnabled = !soundEnabled;
     muteButton.textContent = soundEnabled ? 'SOUND: ON' : 'SOUND: OFF';
     if (soundEnabled) beep(440, 0.04);
   });
+  pressActions.forEach((action, button) => bindPress(button, action));
 
   newGame();
   render();

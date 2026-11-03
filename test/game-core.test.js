@@ -11,6 +11,7 @@ const {
   recordKeypadDigit,
   isEmergencySequenceReady,
   nextEmergencyMode,
+  shouldHandleClick,
   mapGridCellToPixels,
   getSegmentConnections
 } = require('../game-core.js');
@@ -135,6 +136,12 @@ test('cycles emergency appearances from normal through ambulance and fire truck'
   assert.equal(nextEmergencyMode('normal'), 'ambulance');
   assert.equal(nextEmergencyMode('ambulance'), 'fire-truck');
   assert.equal(nextEmergencyMode('fire-truck'), 'normal');
+});
+
+test('suppresses a synthetic click immediately following a pointer press', () => {
+  assert.equal(shouldHandleClick(100, 100), false);
+  assert.equal(shouldHandleClick(100, 799), false);
+  assert.equal(shouldHandleClick(100, 800), true);
 });
 
 test('maps every 20 by 11 grid cell to a contiguous 80 by 44 playfield', () => {

@@ -118,6 +118,10 @@
     return EMERGENCY_MODES[(currentIndex + 1) % EMERGENCY_MODES.length];
   }
 
+  function shouldHandleClick(lastPointerPress, currentTime, suppressionWindow = 700) {
+    return currentTime - lastPointerPress >= suppressionWindow;
+  }
+
   return {
     GRID_COLUMNS,
     GRID_ROWS,
@@ -132,6 +136,7 @@
     advanceGame,
     recordKeypadDigit,
     isEmergencySequenceReady,
-    nextEmergencyMode
+    nextEmergencyMode,
+    shouldHandleClick
   };
 });
