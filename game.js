@@ -263,6 +263,3 @@
   newGame();
   render();
 })();
-
-
-const broken =
